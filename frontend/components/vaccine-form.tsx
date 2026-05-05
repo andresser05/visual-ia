@@ -93,6 +93,10 @@ export function VaccineForm() {
       }
 
       setResult(data)
+
+      // scroll automático
+      window.scrollTo({ top: 600, behavior: "smooth" })
+
     } catch {
       setError("Error al conectar con el servidor.")
     } finally {
@@ -108,145 +112,178 @@ export function VaccineForm() {
 
   return (
     <div className="w-full max-w-2xl mx-auto">
-      <form onSubmit={handleSubmit} className="space-y-6">
 
-        {/* Edad */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium">
-            <Calendar className="w-4 h-4" />
-            Edad
-          </label>
+      {/* FORMULARIO */}
+      {!result && (
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-          <input
-            type="number"
-            value={edad}
-            min={0}
-            max={110}
-            onChange={(e) => {
-              const value = e.target.value
+          {/* Edad */}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <Calendar className="w-4 h-4" />
+              Edad
+            </label>
 
-              if (value === "") {
-                setEdad("")
-                return
-              }
+            <input
+              type="number"
+              value={edad}
+              min={0}
+              max={110}
+              onChange={(e) => {
+                const value = e.target.value
 
-              const num = Number(value)
+                if (value === "") {
+                  setEdad("")
+                  return
+                }
 
-              if (num >= 0 && num <= 110) {
-                setEdad(value)
-              }
-            }}
-            className="w-full px-4 py-3 rounded-lg border"
-            required
-          />
+                const num = Number(value)
 
-          {/* Error */}
-          {edad && !isEdadValida && (
-            <p className="text-red-500 text-sm">
-              La edad debe estar entre 0 y 110 años
-            </p>
-          )}
-        </div>
+                if (num >= 0 && num <= 110) {
+                  setEdad(value)
+                }
+              }}
+              className="w-full px-4 py-3 rounded-lg border"
+              required
+            />
 
-        {/* SEXO */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium">
-            <User className="w-4 h-4" />
-            Sexo
-          </label>
-
-          <div className="grid grid-cols-2 gap-3">
-            {["Masculino", "Femenino"].map((s) => (
-              <label
-                key={s}
-                className={`p-3 border rounded-lg cursor-pointer text-center ${
-                  sexo === s ? "bg-blue-600 text-white" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="sexo"
-                  value={s}
-                  checked={sexo === s}
-                  onChange={(e) => setSexo(e.target.value)}
-                  className="hidden"
-                />
-                {s}
-              </label>
-            ))}
+            {edad && !isEdadValida && (
+              <p className="text-red-500 text-sm">
+                La edad debe estar entre 0 y 110 años
+              </p>
+            )}
           </div>
-        </div>
 
-        {/* Condición */}
-        <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm font-medium">
-            <Heart className="w-4 h-4" />
-            Condición de Salud
-          </label>
-          <select
-            value={condicionSalud}
-            onChange={(e) => setCondicionSalud(e.target.value)}
-            className="w-full px-4 py-3 border rounded-lg"
-            required
+          {/* Sexo */}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <User className="w-4 h-4" />
+              Sexo
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              {["Masculino", "Femenino"].map((s) => (
+                <label
+                  key={s}
+                  className={`p-3 border rounded-lg cursor-pointer text-center ${
+                    sexo === s ? "bg-blue-600 text-white" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="sexo"
+                    value={s}
+                    checked={sexo === s}
+                    onChange={(e) => setSexo(e.target.value)}
+                    className="hidden"
+                  />
+                  {s}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Condición */}
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <Heart className="w-4 h-4" />
+              Condición de Salud
+            </label>
+
+            <select
+              value={condicionSalud}
+              onChange={(e) => setCondicionSalud(e.target.value)}
+              className="w-full px-4 py-3 border rounded-lg"
+              required
+            >
+              <option value="">Seleccione</option>
+              {CONDICIONES_SALUD.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Vacunas */}
+          <div className="space-y-3">
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <ClipboardList className="w-4 h-4" />
+              Vacunas Aplicadas
+            </label>
+
+            <div className="grid grid-cols-2 gap-2">
+              {VACUNAS_APLICADAS_OPTIONS.map((vacuna) => (
+                <label key={vacuna} className="flex items-center gap-2 border p-2 rounded">
+                  <input
+                    type="checkbox"
+                    checked={vacunasSeleccionadas.includes(vacuna)}
+                    onChange={() => toggleVacuna(vacuna)}
+                  />
+                  {vacuna}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Botón */}
+          <button
+            type="submit"
+            disabled={!isFormValid || loading}
+            className="w-full p-4 bg-blue-600 text-white rounded-lg"
           >
-            <option value="">Seleccione</option>
-            {CONDICIONES_SALUD.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
+            {loading ? "Analizando..." : "Obtener Recomendaciones"}
+          </button>
+
+          {/* Loading */}
+          {loading && (
+            <div className="text-center py-4">
+              <p className="animate-pulse text-blue-600 font-medium">
+                Analizando datos...
+              </p>
+            </div>
+          )}
+
+        </form>
+      )}
+
+      {/* ERROR */}
+      {error && (
+        <div className="mt-4 bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg">
+          {error}
         </div>
+      )}
 
-        {/* Vacunas */}
-        <div className="space-y-3">
-          <label className="flex items-center gap-2 text-sm font-medium">
-            <ClipboardList className="w-4 h-4" />
-            Vacunas Aplicadas
-          </label>
-
-          <div className="grid grid-cols-2 gap-2">
-            {VACUNAS_APLICADAS_OPTIONS.map((vacuna) => (
-              <label key={vacuna} className="flex items-center gap-2 border p-2 rounded">
-                <input
-                  type="checkbox"
-                  checked={vacunasSeleccionadas.includes(vacuna)}
-                  onChange={() => toggleVacuna(vacuna)}
-                />
-                {vacuna}
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* Botón */}
-        <button
-          type="submit"
-          disabled={!isFormValid || loading}
-          className="w-full p-4 bg-blue-600 text-white rounded-lg"
-        >
-          {loading ? "Analizando..." : "Obtener Recomendaciones"}
-        </button>
-      </form>
-
-      {/* Resultado */}
+      {/* RESULTADO */}
       {result && (
-        <div className="mt-6">
+        <div className="mt-6 transition-all duration-300">
+
           <h3 className="text-lg font-bold">Resultado:</h3>
 
-          {result.vacunas_recomendadas.length > 0 ? (
-            result.vacunas_recomendadas.map((v, i) => (
-              <p key={i}>✔ {v}</p>
-            ))
-          ) : (
-            <p>No se requieren vacunas adicionales</p>
-          )}
+          <div className="mt-4 space-y-3">
+            {result.vacunas_recomendadas.length > 0 ? (
+              result.vacunas_recomendadas.map((v, i) => (
+                <div
+                  key={i}
+                  className="p-4 rounded-xl border bg-green-50 border-green-200 flex items-center gap-3"
+                >
+                  <Syringe className="text-green-600" />
+                  <span className="font-medium text-green-800">{v}</span>
+                </div>
+              ))
+            ) : (
+              <div className="p-4 rounded-xl bg-blue-50 border border-blue-200 text-blue-800">
+                ✅ No se requieren vacunas adicionales
+              </div>
+            )}
+          </div>
 
-          {/* BOTÓN REINICIAR */}
+          {/* Reiniciar */}
           <button
             onClick={handleReset}
-            className="mt-4 w-full p-3 bg-gray-200 hover:bg-gray-300 rounded-lg"
+            className="mt-4 w-full p-3 bg-red-500 hover:bg-red-600 text-white rounded-lg"
           >
             Reiniciar
           </button>
+
         </div>
       )}
     </div>
