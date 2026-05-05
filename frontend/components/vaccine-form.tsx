@@ -51,6 +51,16 @@ export function VaccineForm() {
     )
   }
 
+  // 🔁 REINICIAR
+  const handleReset = () => {
+    setEdad("")
+    setSexo("")
+    setCondicionSalud("")
+    setVacunasSeleccionadas([])
+    setResult(null)
+    setError(null)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -90,7 +100,11 @@ export function VaccineForm() {
     }
   }
 
-  const isFormValid = edad && sexo && condicionSalud
+  // ✅ VALIDACIÓN
+  const isEdadValida =
+    edad !== "" && Number(edad) >= 0 && Number(edad) <= 110
+
+  const isFormValid = isEdadValida && sexo && condicionSalud
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -102,16 +116,39 @@ export function VaccineForm() {
             <Calendar className="w-4 h-4" />
             Edad
           </label>
+
           <input
             type="number"
             value={edad}
-            onChange={(e) => setEdad(e.target.value)}
+            min={0}
+            max={110}
+            onChange={(e) => {
+              const value = e.target.value
+
+              if (value === "") {
+                setEdad("")
+                return
+              }
+
+              const num = Number(value)
+
+              if (num >= 0 && num <= 110) {
+                setEdad(value)
+              }
+            }}
             className="w-full px-4 py-3 rounded-lg border"
             required
           />
+
+          {/* Error */}
+          {edad && !isEdadValida && (
+            <p className="text-red-500 text-sm">
+              La edad debe estar entre 0 y 110 años
+            </p>
+          )}
         </div>
 
-        {/* SEXO (ARREGLADO) */}
+        {/* SEXO */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-medium">
             <User className="w-4 h-4" />
@@ -119,37 +156,24 @@ export function VaccineForm() {
           </label>
 
           <div className="grid grid-cols-2 gap-3">
-            <label
-              className={`p-3 border rounded-lg cursor-pointer text-center ${
-                sexo === "Masculino" ? "bg-blue-600 text-white" : ""
-              }`}
-            >
-              <input
-                type="radio"
-                name="sexo"
-                value="Masculino"
-                checked={sexo === "Masculino"}
-                onChange={(e) => setSexo(e.target.value)}
-                className="hidden"
-              />
-              Masculino
-            </label>
-
-            <label
-              className={`p-3 border rounded-lg cursor-pointer text-center ${
-                sexo === "Femenino" ? "bg-blue-600 text-white" : ""
-              }`}
-            >
-              <input
-                type="radio"
-                name="sexo"
-                value="Femenino"
-                checked={sexo === "Femenino"}
-                onChange={(e) => setSexo(e.target.value)}
-                className="hidden"
-              />
-              Femenino
-            </label>
+            {["Masculino", "Femenino"].map((s) => (
+              <label
+                key={s}
+                className={`p-3 border rounded-lg cursor-pointer text-center ${
+                  sexo === s ? "bg-blue-600 text-white" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="sexo"
+                  value={s}
+                  checked={sexo === s}
+                  onChange={(e) => setSexo(e.target.value)}
+                  className="hidden"
+                />
+                {s}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -215,6 +239,14 @@ export function VaccineForm() {
           ) : (
             <p>No se requieren vacunas adicionales</p>
           )}
+
+          {/* BOTÓN REINICIAR */}
+          <button
+            onClick={handleReset}
+            className="mt-4 w-full p-3 bg-gray-200 hover:bg-gray-300 rounded-lg"
+          >
+            Reiniciar
+          </button>
         </div>
       )}
     </div>
