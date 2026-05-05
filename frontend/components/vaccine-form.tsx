@@ -230,7 +230,7 @@ export function VaccineForm() {
             disabled={!isFormValid || loading}
             className="w-full p-4 bg-blue-600 text-white rounded-lg"
           >
-            {loading ? "Analizando..." : "Obtener Recomendaciones"}
+            {loading ? "Analizando..." : "Consultar Recomendaciones"}
           </button>
 
           {/* Loading */}
@@ -279,7 +279,7 @@ export function VaccineForm() {
           {/* Reiniciar */}
           <button
             onClick={handleReset}
-            className="mt-4 w-full p-3 bg-red-500 hover:bg-red-600 text-white rounded-lg"
+            className="mt-4 w-full p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
           >
             Reiniciar
           </button>
