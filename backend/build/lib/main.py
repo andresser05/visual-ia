@@ -102,3 +102,10 @@ async def model_info():
         "vaccines": list(mlb.classes_),
         "message": "Modelo cargado correctamente"
     }
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def inicio():
+    return {"mensaje": "API funcionando en Render"}
