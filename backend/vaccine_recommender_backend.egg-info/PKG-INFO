@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: vaccine-recommender-backend
+Version: 0.1.0
+Summary: Backend for vaccine recommendation ML model
+Requires-Python: >=3.12
+Requires-Dist: fastapi[standard]>=0.128.1
+Requires-Dist: scikit-learn>=1.5.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: joblib>=1.4.0

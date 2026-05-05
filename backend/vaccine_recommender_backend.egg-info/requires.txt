@@ -1,0 +1,4 @@
+fastapi[standard]>=0.128.1
+scikit-learn>=1.5.0
+pandas>=2.2.0
+joblib>=1.4.0
