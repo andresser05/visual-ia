@@ -1,43 +1,11 @@
-import { Syringe, Shield, Brain, Heart } from "lucide-react"
+import { Shield, Brain, Heart } from "lucide-react"
 import { VaccineForm } from "@/components/vaccine-form"
+import { BarraSuperior } from "@/components/barra-superior"
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-              <Syringe className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="font-semibold text-foreground">VacunaIA</h1>
-              <p className="text-xs text-muted-foreground">Sistema de Recomendacion</p>
-            </div>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Inicio
-            </a>
-            <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Acerca de
-            </a>
-            <a href="/mapa" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Puntos de vacunación
-            </a>
-            <a href="/carnet" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Carnet
-            </a>
-            <a href="/citas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Citas
-            </a>
-            <a href="/ingresar" className="text-sm font-medium text-blue-600">
-            Ingresar
-            </a>
-          </nav>
-        </div>
-      </header>
+      <BarraSuperior />
 
       {/* Hero Section */}
       <section className="py-16 md:py-24">
