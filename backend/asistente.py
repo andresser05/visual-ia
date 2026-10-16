@@ -94,7 +94,7 @@ def asistente(consulta: Consulta):
 
     try:
         r = cliente.chat.completions.create(
-            model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"),
             messages=[{"role": "system", "content": SISTEMA}, *historial],
             max_tokens=1200,
             temperature=0.1,
