@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Syringe, User, Calendar, Heart, ClipboardList } from "lucide-react"
+import { API_URL } from "@/lib/api"
 
 interface PredictionResponse {
   vacunas_recomendadas: string[]
@@ -73,7 +74,7 @@ export function VaccineForm() {
         : "Ninguna"
 
     try {
-      const response = await fetch("https://visual-ia.onrender.com/predict", {
+      const response = await    fetch(`${API_URL}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

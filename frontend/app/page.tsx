@@ -23,6 +23,18 @@ export default function HomePage() {
             <a href="#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Acerca de
             </a>
+            <a href="/mapa" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Puntos de vacunación
+            </a>
+            <a href="/carnet" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Carnet
+            </a>
+            <a href="/citas" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Citas
+            </a>
+            <a href="/ingresar" className="text-sm font-medium text-blue-600">
+            Ingresar
+            </a>
           </nav>
         </div>
       </header>
