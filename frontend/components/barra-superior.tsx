@@ -11,6 +11,7 @@ const ENLACES = [
   { href: "/mapa", texto: "Puntos de vacunación" },
   { href: "/carnet", texto: "Carnet" },
   { href: "/citas", texto: "Citas" },
+  { href: "/asistente", texto: "Asistente" },
 ]
 
 export function BarraSuperior() {

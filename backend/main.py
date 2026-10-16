@@ -9,6 +9,7 @@ import joblib
 
 from db import db
 from rutas_usuario import router as router_usuario
+from asistente import router as router_asistente
 
 
 @asynccontextmanager
@@ -40,6 +41,7 @@ app.add_middleware(
 )
 
 app.include_router(router_usuario)
+app.include_router(router_asistente)
 
 # Load the trained model and label binarizer
 model_path = os.path.join(os.path.dirname(__file__), "model.pkl")
@@ -84,7 +86,12 @@ def health() -> dict[str, str]:
             db_status = "ok"
         except Exception:
             db_status = "sin_conexion"
-    return {"status": "ok", "model_status": model_status, "db_status": db_status}
+    return {
+        "status": "ok",
+        "model_status": model_status,
+        "db_status": db_status,
+        "asistente": "configurado" if os.getenv("GROQ_API_KEY") else "no_configurado",
+    }
 
 
 @app.post("/predict", response_model=PredictionResponse)

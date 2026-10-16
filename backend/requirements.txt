@@ -25,3 +25,4 @@ pymongo[srv]
 PyJWT
 bcrypt
 python-dotenv
+groq==1.7.0
