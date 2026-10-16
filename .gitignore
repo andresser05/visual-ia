@@ -23,3 +23,5 @@ __pycache__/
 
 # Entornos
 .env
+build/
+*.egg-info/
